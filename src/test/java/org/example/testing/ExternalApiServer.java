@@ -13,26 +13,6 @@ class ExternalApiServer {
 
     ExternalApiServer() {
         server = new WireMockServer(options().port(randomPort()));
-        server.stubFor(
-            WireMock
-                .get("/foo")
-                .willReturn(
-                    WireMock
-                        .aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", "application/json")
-                        .withBody(
-                            """
-                            [
-                                {
-                                    "firstName": "Jon",
-                                    "lastName": "Doe"
-                                }
-                            ]
-                            """
-                        )
-                )
-        );
     }
 
     public String urlFor(String path) {
@@ -45,6 +25,29 @@ class ExternalApiServer {
 
     public void stop() {
         server.stop();
+    }
+
+    public void givenThisPersonExists(String firstName, String lastName) {
+        server.stubFor(
+            WireMock
+                .get("/foo")
+                .willReturn(
+                    WireMock
+                        .aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(
+                            """
+                            [
+                                {
+                                    "firstName": "%s",
+                                    "lastName": "%s"
+                                }
+                            ]
+                            """.formatted(firstName, lastName)
+                        )
+                )
+        );
     }
 
     @SneakyThrows

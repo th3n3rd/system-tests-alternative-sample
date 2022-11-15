@@ -33,6 +33,8 @@ class AppTests {
 
         @Test
         void successfulInteraction() {
+            apiServer.givenThisPersonExists("Jon", "Doe");
+
             when()
                 .get(apiServer.urlFor("/foo"))
                 .then()
