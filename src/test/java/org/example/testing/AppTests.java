@@ -10,5 +10,4 @@ class AppTests {
     void tautology() {
         assertThat(true).isTrue();
     }
-
 }

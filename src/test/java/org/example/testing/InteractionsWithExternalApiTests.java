@@ -27,7 +27,15 @@ class InteractionsWithExternalApiTests {
     void successfulInteraction() {
         apiServer.givenThisPersonExists("Jon", "Doe");
 
-        when().get(apiServer.urlFor("/foo")).then().assertThat().statusCode(200).assertThat().body(equalTo("""
+        when()
+            .get(apiServer.urlFor("/foo"))
+            .then()
+            .assertThat()
+            .statusCode(200)
+            .assertThat()
+            .body(
+                equalTo(
+                    """
                     [
                         {
                             "firstName": "Jon",
