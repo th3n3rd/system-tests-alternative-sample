@@ -2,7 +2,6 @@ package org.example.testing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.mongodb.client.model.Filters;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,30 +13,6 @@ class AppTests {
     @Test
     void tautology() {
         assertThat(true).isTrue();
-    }
-
-    @Nested
-    class InteractionWithExternalMongoDb {
-
-        private ExternalMongoDbServer mongoDbServer = new ExternalMongoDbServer();
-
-        @BeforeEach
-        void setUp() {
-            mongoDbServer.start();
-        }
-
-        @AfterEach
-        void tearDown() {
-            mongoDbServer.stop();
-        }
-
-        @Test
-        void successfulInteraction() {
-            mongoDbServer.givenThisPersonExists("Jon", "Doe");
-            var people = mongoDbServer.collection("people");
-            var jon = people.find(Filters.eq("firstName", "Jon")).first();
-            assertThat(jon.get("lastName")).isEqualTo("Doe");
-        }
     }
 
     @Nested
