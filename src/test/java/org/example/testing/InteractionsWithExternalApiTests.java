@@ -5,10 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@Nested
 class InteractionsWithExternalApiTests {
 
     private ExternalApiServer apiServer = new ExternalApiServer();
@@ -30,9 +28,7 @@ class InteractionsWithExternalApiTests {
         when()
             .get(apiServer.urlFor("/foo"))
             .then()
-            .assertThat()
             .statusCode(200)
-            .assertThat()
             .body(
                 equalTo(
                     """
