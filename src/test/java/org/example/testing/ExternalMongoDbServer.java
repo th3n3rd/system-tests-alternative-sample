@@ -24,7 +24,8 @@ class ExternalMongoDbServer {
         uniqueDatabase = UUID.randomUUID().toString();
         port = Network.freeServerPort(Network.getLocalHost());
 
-        var config = MongodConfig.builder()
+        var config = MongodConfig
+            .builder()
             .version(Version.Main.V4_4)
             .net(new Net(port, Network.localhostIsIPv6()))
             .build();

@@ -44,7 +44,10 @@ class ExternalApiServer {
                                     "lastName": "%s"
                                 }
                             ]
-                            """.formatted(firstName, lastName)
+                            """.formatted(
+                                    firstName,
+                                    lastName
+                                )
                         )
                 )
         );
