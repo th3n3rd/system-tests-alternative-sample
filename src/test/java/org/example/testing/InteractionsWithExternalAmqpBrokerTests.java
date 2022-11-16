@@ -11,25 +11,25 @@ import org.junit.jupiter.api.Test;
 @Nested
 class InteractionsWithExternalAmqpBrokerTests {
 
-    private ExternalAmqpServer amqpServer = new ExternalAmqpServer();
+    private ExternalAmqpBroker amqpBroker = new ExternalAmqpBroker();
 
     @BeforeEach
     void setUp() {
-        amqpServer.start();
+        amqpBroker.start();
     }
 
     @AfterEach
     void tearDown() {
-        amqpServer.stop();
+        amqpBroker.stop();
     }
 
     @SneakyThrows
     @Test
     void successfulInteraction() {
-        amqpServer.givenThereArePeople();
-        var queue = amqpServer.queue("people", "joined");
-        amqpServer.givenThisPersonJoined("Jon", "Doe");
-        var response = amqpServer.receiver().basicGet(queue, true);
+        amqpBroker.givenThereArePeople();
+        var queue = amqpBroker.queue("people", "joined");
+        amqpBroker.givenThisPersonJoined("Jon", "Doe");
+        var response = amqpBroker.receiver().basicGet(queue, true);
         var message = new String(response.getBody());
         assertThat(message).isEqualTo("Jon Doe");
     }

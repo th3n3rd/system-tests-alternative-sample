@@ -9,9 +9,9 @@ import lombok.SneakyThrows;
 import org.apache.qpid.server.SystemLauncher;
 import org.apache.qpid.server.util.urlstreamhandler.classpath.Handler;
 
-class ExternalAmqpServer {
+class ExternalAmqpBroker {
 
-    private final SystemLauncher systemLauncher;
+    private final SystemLauncher server;
     private final ConnectionFactory factory;
     private Channel publisher;
     private Channel receiver;
@@ -23,19 +23,19 @@ class ExternalAmqpServer {
     }
 
     @SneakyThrows
-    public ExternalAmqpServer() {
-        systemLauncher = new SystemLauncher();
+    public ExternalAmqpBroker() {
+        server = new SystemLauncher();
         factory = new ConnectionFactory();
         factory.setUri(connectionString());
     }
 
     @SneakyThrows
     public void start() {
-        systemLauncher.startup(systemConfig());
+        server.startup(systemConfig());
     }
 
     public void stop() {
-        systemLauncher.shutdown();
+        server.shutdown();
     }
 
     @SneakyThrows
@@ -86,7 +86,7 @@ class ExternalAmqpServer {
     @SneakyThrows
     private Map<String, Object> systemConfig() {
         var initialConfig =
-            ExternalAmqpServer.class.getClassLoader()
+            ExternalAmqpBroker.class.getClassLoader()
                 .getResource("qpid-config.json");
         return Map.of(
             "type",
