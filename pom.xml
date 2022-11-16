@@ -20,6 +20,8 @@
         <logback.version>1.4.4</logback.version>
         <embedded-mongodb.version>3.5.1</embedded-mongodb.version>
         <mongodb-driver.version>4.7.1</mongodb-driver.version>
+        <qpid-broker.version>8.0.6</qpid-broker.version>
+        <amqp-client.version>5.16.0</amqp-client.version>
     </properties>
 
     <dependencies>
@@ -67,6 +69,29 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>${mongodb-driver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-broker-core</artifactId>
+            <version>${qpid-broker.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-broker-plugins-amqp-0-8-protocol</artifactId>
+            <version>${qpid-broker.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-broker-plugins-memory-store</artifactId>
+            <version>${qpid-broker.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>${amqp-client.version}</version>
         </dependency>
     </dependencies>
 

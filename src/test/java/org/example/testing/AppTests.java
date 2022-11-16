@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.mongodb.client.model.Filters;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -78,6 +79,33 @@ class AppTests {
             var people = mongoDbServer.collection("people");
             var jon = people.find(Filters.eq("firstName", "Jon")).first();
             assertThat(jon.get("lastName")).isEqualTo("Doe");
+        }
+    }
+
+    @Nested
+    class InteractionWithExternalAmqpBroker {
+
+        private ExternalAmqpServer amqpServer = new ExternalAmqpServer();
+
+        @BeforeEach
+        void setUp() {
+            amqpServer.start();
+        }
+
+        @AfterEach
+        void tearDown() {
+            amqpServer.stop();
+        }
+
+        @SneakyThrows
+        @Test
+        void successfulInteraction() {
+            amqpServer.givenThereArePeople();
+            var queue = amqpServer.queue("people", "joined");
+            amqpServer.givenThisPersonJoined("Jon", "Doe");
+            var response = amqpServer.receiver().basicGet(queue, true);
+            var message = new String(response.getBody());
+            assertThat(message).isEqualTo("Jon Doe");
         }
     }
 }
