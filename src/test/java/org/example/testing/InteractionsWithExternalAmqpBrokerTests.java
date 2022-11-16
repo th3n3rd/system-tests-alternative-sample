@@ -5,10 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@Nested
 class InteractionsWithExternalAmqpBrokerTests {
 
     private ExternalAmqpBroker amqpBroker = new ExternalAmqpBroker();
